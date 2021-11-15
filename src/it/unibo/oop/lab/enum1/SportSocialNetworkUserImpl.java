@@ -3,6 +3,9 @@
  */
 package it.unibo.oop.lab.enum1;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUserImpl;
 import it.unibo.oop.lab.socialnetwork.User;
 
@@ -11,25 +14,57 @@ import it.unibo.oop.lab.socialnetwork.User;
  * Represents a social network user along with the sports he/she likes to do or
  * to follow.
  * 
- * 1) Define the same behavior as done on the previous exercise: - you can reuse
- * the same class, but... - ..now make explicit reference to an enumeration
- * Sport rather than a nested static class
+ * 1) Complete the definition of the nested static class Sport, featuring just a
+ * field representing the sport name.
  * 
- * 
- * - NOTE: now we going to define Sport as an enumeration (in its own file
- * Sport.java)
- * 
+ * 2) Add the unimplemented methods.
  * 
  * @param <U>
- *            specific user type
+ *            specific {@link User} type
  */
 public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUserImpl<U> {
 
-    /*
-     * TODO
-     * 
-     * add a field to keep track of the set of sports followed/done by a user
+    /**
+     * Static {@link Sport} constant.
      */
+    public static final Sport SOCCER;
+    /**
+     * Static {@link Sport} constant.
+     */
+    public static final Sport F1;
+    /**
+     * Static {@link Sport} constant.
+     */
+    public static final Sport MOTOGP;
+    /**
+     * Static {@link Sport} constant.
+     */
+    public static final Sport VOLLEY;
+    /**
+     * Static {@link Sport} constant.
+     */
+    public static final Sport BASKET;
+    /**
+     * Static {@link Sport} constant.
+     */
+    public static final Sport BIKE;
+
+    /*
+     * TODO: initialize properly these sports
+     */
+    static {
+        SOCCER = new Sport("Soccer");
+        F1 = new Sport("F1");
+        MOTOGP = new Sport("MotoGP");
+        VOLLEY = new Sport("Volley");
+        BASKET = new Sport("Basket");
+        BIKE = new Sport("Bike");
+    }
+
+    /**
+     * Field meant to keep track of the set of sports followed/done by a user.
+     */
+    private final Set<Sport> sports;
 
     /**
      * Builds a new {@link SportSocialNetworkUserImpl}.
@@ -61,12 +96,13 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     public SportSocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
+        this.sports = new HashSet<>();
     }
 
     /*
      * [METHODS]
      * 
-     * Redefine the methods below reusing the same code of previous exercise
+     * Implements all the methods below
      */
 
     /**
@@ -78,7 +114,7 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     // TODO
     public void addSport(final Sport sport) {
-
+    	sports.add(sport);
     }
 
     /**
@@ -86,10 +122,43 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      * 
      * @param s
      *            sport to use as an input
-     * 
-     * @return true if the user likes sport s
+     * @return true if a user likes sport s
      */
+    // TODO
     public boolean hasSport(final Sport s) {
-        return false;
+        return sports.contains(s);
+    }
+
+    /*
+     * TODO
+     * 
+     * Complete the definition of this static inner class defining a Sport along
+     * with its bare name.
+     */
+    public static final class Sport {
+        /*
+         * TODO
+         * 
+         * Redefine equals so that two sports are equal only if they feature the
+         * very same name. Remember that you must also redefine hashCode()!
+         */
+    	final String name;
+    	
+    	public Sport(String name) {
+    		this.name = name;
+    	}
+    	
+        @Override
+        public boolean equals(final Object o) {
+        	if(o.hashCode() == this.hashCode()) {
+        		return true;
+        	}
+            return false;
+        }
+        
+        @Override
+        public int hashCode() {
+        	return name.hashCode();
+        }
     }
 }
